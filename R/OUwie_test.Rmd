@@ -28,9 +28,9 @@ library(kableExtra)
 
 ###BPP
 ```{r}
-tree<-read.nexus("./Final_tree.nex")
+tree<-read.nexus("./data/Final_tree.nex")
 
-dat<-read.csv("./data/scaleddata/OUwie/BPP_OUwie_ManyOptions_optima.csv",row.names = 1)
+dat<-read.csv("./data/BPP_OUwie_ManyOptions_optima.csv",row.names = 1)
 ```
 
 ```{r, echo=FALSE}
@@ -49,7 +49,7 @@ plot(simmap.tre,type="fan",fsize=0.5,ftype="i")
 ```
 
 ```{r}
-dat<-read.csv("./data/scaleddata/OUwie/BPP_OUwie_ManyOptions_optima.csv")
+dat<-read.csv("./data/BPP_OUwie_ManyOptions_optima.csv")
 dat$BPP.CNP<-NULL
 dat$Reg2<-NULL
 dat$Reg3<-NULL
@@ -111,7 +111,7 @@ aic.w(aic)
 ###CRISP
 
 ```{r}
-dat<-read.csv("./data/scaleddata/OUwie/CRISP_OUwie_ManyOptions_optima.csv")
+dat<-read.csv("./data/CRISP_OUwie_ManyOptions_optima.csv")
 dat$CRISP<-NULL
 dat$Reg2<-NULL
 dat$Reg3<-NULL
@@ -171,7 +171,7 @@ aic.w(aic)
 
 ###CTL
 ```{r}
-dat<-read.csv("./data/scaleddata/OUwie/CTL_OUwie_ManyOptions_optima.csv")
+dat<-read.csv("./data/CTL_OUwie_ManyOptions_optima.csv")
 dat$Reg2<-NULL
 dat$Reg3<-NULL
 ```
@@ -228,7 +228,7 @@ aic.w(aic)
 ###GF
 
 ```{r}
-dat<-read.csv("./data/scaleddata/OUwie/GF_OUwie_ManyOptions_optima.csv")
+dat<-read.csv("./data/GF_OUwie_ManyOptions_optima.csv")
 dat$Reg2<-NULL
 dat$Reg3<-NULL
 ```
@@ -285,7 +285,7 @@ aic.w(aic)
 ###KSPI
 
 ```{r}
-dat<-read.csv("./data/scaleddata/OUwie/KSPI_OUwie_ManyOptions_optima.csv")
+dat<-read.csv("./data/KSPI_OUwie_ManyOptions_optima.csv")
 dat$Reg2<-NULL
 dat$Reg3<-NULL
 ```
@@ -340,7 +340,7 @@ aic.w(aic)
 ###LAAO
 
 ```{r}
-dat<-read.csv("./data/scaleddata/OUwie/LAAO_OUwie_ManyOptions_optima.csv")
+dat<-read.csv("./data/LAAO_OUwie_ManyOptions_optima.csv")
 dat$Reg2<-NULL
 dat$Reg3<-NULL
 ```
@@ -395,7 +395,7 @@ aic.w(aic)
 ###SVMP
 
 ```{r}
-dat<-read.csv("./data/scaleddata/OUwie/SVMP_OUwie_ManyOptions_optima.csv")
+dat<-read.csv("./data/SVMP_OUwie_ManyOptions_optima.csv")
 dat$Reg2<-NULL
 dat$Reg3<-NULL
 ```
@@ -449,7 +449,7 @@ aic.w(aic)
 
 ###vPLA2
 ```{r}
-dat<-read.csv("./data/scaleddata/OUwie/vPLA2_OUwie_ManyOptions_optima.csv")
+dat<-read.csv("./data/vPLA2_OUwie_ManyOptions_optima.csv")
 dat$Reg2<-NULL
 dat$Reg3<-NULL
 ```
@@ -503,7 +503,7 @@ aic.w(aic)
 
 ####ePLA2
 ```{r}
-dat<-read.csv("./data/scaleddata/OUwie/ePLA2_OUwie_ManyOptions_optima.csv")
+dat<-read.csv("./data/ePLA2_OUwie_ManyOptions_optima.csv")
 dat$Reg2<-NULL
 dat$Reg3<-NULL
 ```
@@ -557,7 +557,7 @@ aic.w(aic)
 
 ###TFTx
 ```{r}
-dat<-read.csv("./data/scaleddata/OUwie/TFTx_OUwie_ManyOptions_optima.csv")
+dat<-read.csv("./data/TFTx_OUwie_ManyOptions_optima.csv")
 dat$Reg2<-NULL
 dat$Reg3<-NULL
 ```
