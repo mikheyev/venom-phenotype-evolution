@@ -1,0 +1,611 @@
+---
+title: "OUwie_models_test"
+author: "Agneesh Barua"
+date: "09/08/2019"
+output: 
+ html_document:
+    df_print: paged
+    theme: cerulean
+    toc: yes
+    toc_depth: 5
+    toc_float:
+      collapsed: no
+---
+
+```{r}
+library(ape)
+library(geiger)
+library(phytools)
+library(coda)
+library(OUwie)
+library(spptest)
+library(kableExtra)
+```
+
+#Testing multi Optioma OU models with OUwie
+
+##Regime classification:1
+
+###BPP
+```{r}
+tree<-read.nexus("./Final_tree.nex")
+
+dat<-read.csv("./data/scaleddata/OUwie/BPP_OUwie_ManyOptions_optima.csv",row.names = 1)
+```
+
+```{r, echo=FALSE}
+kable(cbind(dat)) %>%
+  kable_styling() %>%
+  scroll_box(width = "800px", height = "500px")
+```
+
+Make simmap tree for selective regime. We classified selective regime based on optima obtained from Barua and Mikheyev 2019. Figure in supplementary shows which snakes were clustered into which regime.
+```{r}
+ad_reg<-setNames(dat[,2],rownames(dat))
+
+simmap.tre<-make.simmap(tree, ad_reg, model = "ER")
+
+plot(simmap.tre,type="fan",fsize=0.5,ftype="i")
+```
+
+```{r}
+dat<-read.csv("./data/scaleddata/OUwie/BPP_OUwie_ManyOptions_optima.csv")
+dat$BPP.CNP<-NULL
+dat$Reg2<-NULL
+dat$Reg3<-NULL
+dat
+```
+
+```{r}
+BM1_BPP<-OUwie(phy = simmap.tre,data = dat,model = 'BM1',simmap.tree = T,diagn = T)
+```
+
+```{r}
+BM1_BPP
+```
+
+```{r}
+OU1_BPP<-OUwie(phy = simmap.tre, data = dat, model="OU1", simmap.tree=T,diagn = T)
+```
+
+```{r}
+OU1_BPP
+```
+
+```{r}
+#model diagnostics
+OU1_BPP$eigval
+OU1_BPP$solution.se
+```
+
+
+```{r}
+OUM_BPP<-OUwie(phy = simmap.tre, data = dat, model="OUM", simmap.tree=T,diagn = T)
+```
+
+
+```{r}
+OUM_BPP
+```
+
+```{r}
+#model diagnostics
+OUM_BPP$eigval
+OUM_BPP$solution.se
+```
+
+
+```{r}
+aic<-setNames(c(BM1_BPP$AICc,OU1_BPP$AICc,OUM_BPP$AICc),
+              c("BM","OU1","OUM"))
+```
+
+```{r}
+aic
+```
+
+```{r}
+aic.w(aic)
+```
+
+###CRISP
+
+```{r}
+dat<-read.csv("./data/scaleddata/OUwie/CRISP_OUwie_ManyOptions_optima.csv")
+dat$CRISP<-NULL
+dat$Reg2<-NULL
+dat$Reg3<-NULL
+dat
+```
+
+
+```{r}
+BM1_CRISP<-OUwie(phy = simmap.tre,data = dat, model = "BM1",simmap.tree = T,diagn = T)
+```
+
+```{r}
+BM1_CRISP
+```
+
+
+```{r}
+OU1_CRISP<-OUwie(phy = simmap.tre, data = dat, model="OU1", simmap.tree=T,diagn = T)
+```
+
+```{r}
+OU1_CRISP
+```
+
+```{r}
+OU1_CRISP$eigval
+OU1_CRISP$soution.se
+```
+
+```{r}
+OUM_CRISP<-OUwie(phy = simmap.tre, data = dat, model="OUM", simmap.tree=T,diagn = T)
+```
+
+
+```{r}
+OUM_CRISP
+```
+
+```{r}
+OUM_CRISP$eigval
+OUM_CRISP$solution.se
+```
+
+```{r}
+aic<-setNames(c(BM1_CRISP$AICc,OU1_CRISP$AICc,OUM_CRISP$AICc),
+              c("BM1","OU1","OUM"))
+```
+
+```{r}
+aic
+```
+
+```{r}
+aic.w(aic)
+```
+
+
+###CTL
+```{r}
+dat<-read.csv("./data/scaleddata/OUwie/CTL_OUwie_ManyOptions_optima.csv")
+dat$Reg2<-NULL
+dat$Reg3<-NULL
+```
+
+```{r}
+BM1_CTL<-OUwie(phy = simmap.tre,data = dat,model = 'BM1',simmap.tree = T,diagn = T)
+```
+
+```{r}
+BM1_CTL
+```
+
+```{r}
+OU1_CTL<-OUwie(phy = simmap.tre, data = dat, model="OU1", simmap.tree=T,diagn = T)
+```
+
+```{r}
+OU1_CTL
+```
+
+```{r}
+OU1_CTL$eigval
+OU1_CTL$solution.se
+```
+
+```{r}
+OUM_CTL<-OUwie(phy = simmap.tre, data = dat, model="OUM", simmap.tree=T,diagn = T)
+```
+
+
+```{r}
+OUM_CTL
+```
+
+```{r}
+OUM_CTL$eigval
+OUM_CTL$solution.se
+```
+
+
+```{r}
+aic<-setNames(c(BM1_CTL$AICc,OU1_CTL$AICc,OUM_CTL$AICc),
+              c("BM","OU1","OUM"))
+```
+
+```{r}
+aic
+```
+
+```{r}
+aic.w(aic)
+```
+
+###GF
+
+```{r}
+dat<-read.csv("./data/scaleddata/OUwie/GF_OUwie_ManyOptions_optima.csv")
+dat$Reg2<-NULL
+dat$Reg3<-NULL
+```
+
+```{r}
+BM1_GF<-OUwie(phy = simmap.tre,data = dat,model = 'BM1',simmap.tree = T,diagn = T)
+```
+
+```{r}
+BM1_GF
+```
+
+```{r}
+OU1_GF<-OUwie(phy = simmap.tre, data = dat, model="OU1", simmap.tree=T,diagn = T)
+```
+
+```{r}
+OU1_GF
+```
+
+```{r}
+OU1_GF$eigval
+OU1_GF$solution.se
+```
+
+```{r}
+OUM_GF<-OUwie(phy = simmap.tre, data = dat, model="OUM", simmap.tree=T,diagn = T)
+```
+
+
+```{r}
+OUM_GF
+```
+
+```{r}
+OUM_GF$eigval
+OUM_GF$solution.se
+```
+
+```{r}
+aic<-setNames(c(BM1_GF$AICc,OU1_GF$AICc,OUM_GF$AICc),
+              c("BM","OU1","OUM"))
+```
+
+```{r}
+aic
+```
+
+```{r}
+aic.w(aic)
+```
+
+
+###KSPI
+
+```{r}
+dat<-read.csv("./data/scaleddata/OUwie/KSPI_OUwie_ManyOptions_optima.csv")
+dat$Reg2<-NULL
+dat$Reg3<-NULL
+```
+
+```{r}
+BM1_KSPI<-OUwie(phy = simmap.tre,data = dat,model = 'BM1',simmap.tree = T,diagn = T)
+```
+
+```{r}
+BM1_KSPI
+```
+
+```{r}
+OU1_KSPI<-OUwie(phy = simmap.tre, data = dat, model="OU1", simmap.tree=T,diagn = T)
+```
+
+```{r}
+OU1_KSPI
+```
+
+```{r}
+OU1_KSPI$eigval
+OU1_KSPI$solution.se
+```
+
+```{r}
+OUM_KSPI<-OUwie(phy = simmap.tre, data = dat, model="OUM", simmap.tree=T,diagn = T)
+```
+
+```{r}
+OUM_KSPI
+```
+
+```{r}
+OUM_KSPI$eigval
+OUM_KSPI$solution.se
+```
+
+```{r}
+aic<-setNames(c(BM1_KSPI$AICc,OU1_KSPI$AICc,OUM_KSPI$AICc),
+              c("BM1","OU1","OUM"))
+```
+
+```{r}
+aic
+```
+
+```{r}
+aic.w(aic)
+```
+
+###LAAO
+
+```{r}
+dat<-read.csv("./data/scaleddata/OUwie/LAAO_OUwie_ManyOptions_optima.csv")
+dat$Reg2<-NULL
+dat$Reg3<-NULL
+```
+
+```{r}
+BM1_LAAO<-OUwie(phy = simmap.tre,data = dat,model = 'BM1',simmap.tree = T,diagn = T)
+```
+
+```{r}
+BM1_LAAO
+```
+
+```{r}
+OU1_LAAO<-OUwie(phy = simmap.tre, data = dat, model="OU1", simmap.tree=T,diagn = T)
+```
+
+```{r}
+OU1_LAAO
+```
+
+```{r}
+OU1_LAAO$eigval
+OU1_LAAO$solution.se
+```
+
+```{r}
+OUM_LAAO<-OUwie(phy = simmap.tre, data = dat, model="OUM", simmap.tree=T,diagn = T)
+```
+
+```{r}
+OUM_LAAO
+```
+
+```{r}
+OUM_LAAO$eigval
+OUM_LAAO$solution.se
+```
+
+```{r}
+aic<-setNames(c(BM1_LAAO$AICc,OU1_LAAO$AICc,OUM_LAAO$AICc),
+              c("BM1","OU1","OUM"))
+```
+
+```{r}
+aic
+```
+
+```{r}
+aic.w(aic)
+```
+
+###SVMP
+
+```{r}
+dat<-read.csv("./data/scaleddata/OUwie/SVMP_OUwie_ManyOptions_optima.csv")
+dat$Reg2<-NULL
+dat$Reg3<-NULL
+```
+
+```{r}
+BM1_SVMP<-OUwie(phy = simmap.tre,data = dat,model="BM1",simmap.tree=TRUE,diagn = T)
+```
+
+```{r}
+BM1_SVMP
+```
+
+```{r}
+OU1_SVMP<-OUwie(phy = simmap.tre, data = dat, model="OU1", simmap.tree=T,diagn = T)
+```
+
+```{r}
+OU1_SVMP
+```
+
+```{r}
+OU1_SVMP$eigval
+OU1_SVMP$solution.se
+```
+
+```{r}
+OUM_SVMP<-OUwie(phy = simmap.tre, data = dat, model="OUM", simmap.tree=T,diagn = T)
+```
+
+```{r}
+OUM_SVMP
+```
+
+```{r}
+OUM_SVMP$eigval
+OUM_SVMP$solution.se
+```
+
+```{r}
+aic<-setNames(c(BM1_SVMP$AICc,OU1_SVMP$AICc,OUM_SVMP$AICc),
+              c("BM","OU1","OUM"))
+```
+
+```{r}
+aic
+```
+
+```{r}
+aic.w(aic)
+```
+
+###vPLA2
+```{r}
+dat<-read.csv("./data/scaleddata/OUwie/vPLA2_OUwie_ManyOptions_optima.csv")
+dat$Reg2<-NULL
+dat$Reg3<-NULL
+```
+
+```{r}
+BM1_vPLA2<-OUwie(phy = simmap.tre,data = dat,model="BM1",simmap.tree=TRUE,diagn = T)
+```
+
+```{r}
+BM1_vPLA2
+```
+
+```{r}
+OU1_vPLA2<-OUwie(phy = simmap.tre, data = dat, model="OU1", simmap.tree=T,diagn = T)
+```
+
+```{r}
+OU1_vPLA2
+```
+
+```{r}
+OU1_vPLA2$eigval
+OU1_vPLA2$solution.se
+```
+
+```{r}
+OUM_vPLA2<-OUwie(phy = simmap.tre, data = dat, model="OUM", simmap.tree=T,diagn = T)
+```
+
+```{r}
+OUM_vPLA2
+```
+
+```{r}
+OUM_vPLA2$eigval
+OUM_vPLA2$solution.se
+```
+
+```{r}
+aic<-setNames(c(BM1_vPLA2$AICc,OU1_vPLA2$AICc,OUM_vPLA2$AICc),
+              c("BM1","OU1","OUM"))
+```
+
+```{r}
+aic
+```
+
+```{r}
+aic.w(aic)
+```
+
+####ePLA2
+```{r}
+dat<-read.csv("./data/scaleddata/OUwie/ePLA2_OUwie_ManyOptions_optima.csv")
+dat$Reg2<-NULL
+dat$Reg3<-NULL
+```
+
+```{r}
+BM1_ePLA2<-OUwie(phy = simmap.tre,data = dat,model="BM1",simmap.tree=TRUE,diagn = T)
+```
+
+```{r}
+BM1_ePLA2
+```
+
+```{r}
+OU1_ePLA2<-OUwie(phy = simmap.tre, data = dat, model="OU1", simmap.tree=T,diagn = T)
+```
+
+```{r}
+OU1_ePLA2
+```
+
+```{r}
+OU1_ePLA2$eigval
+OU1_ePLA2$solution.se
+```
+
+```{r}
+OUM_ePLA2<-OUwie(phy = simmap.tre, data = dat, model="OUM", simmap.tree=T,diagn = T)
+```
+
+```{r}
+OUM_ePLA2
+```
+
+```{r}
+OUM_ePLA2$eigval
+OUM_ePLA2$solution.se
+```
+
+```{r}
+aic<-setNames(c(BM1_ePLA2$AICc,OU1_ePLA2$AICc,OUM_ePLA2$AICc),
+              c("BM","OU1","OUM"))
+```
+
+```{r}
+aic
+```
+
+```{r}
+aic.w(aic)
+```
+
+###TFTx
+```{r}
+dat<-read.csv("./data/scaleddata/OUwie/TFTx_OUwie_ManyOptions_optima.csv")
+dat$Reg2<-NULL
+dat$Reg3<-NULL
+```
+
+```{r}
+BM1_TFTx<-OUwie(phy = simmap.tre,data = dat,model="BM1",simmap.tree=TRUE,diagn = T)
+```
+
+```{r}
+BM1_TFTx
+```
+
+
+```{r}
+OU1_TFTx<-OUwie(phy = simmap.tre, data = dat, model="OU1", simmap.tree=T,diagn = T)
+```
+
+```{r}
+OU1_TFTx
+```
+ 
+```{r}
+OU1_TFTx$eigval
+OU1_TFTx$solution.se
+```
+
+```{r}
+OUM_TFTx<-OUwie(phy = simmap.tre, data = dat, model="OUM", simmap.tree=T,diagn = T)
+```
+
+```{r}
+OUM_TFTx
+```
+
+```{r}
+OUM_TFTx$eigval
+OUM_TFTx$solution.se
+```
+
+```{r}
+aic<-setNames(c(BM1_TFTx$AICc,OU1_TFTx$AICc,OUM_TFTx$AICc),
+              c("BM","OU1","OUM"))
+```
+
+```{r}
+aic
+```
+
+```{r}
+aic.w(aic)
+```
